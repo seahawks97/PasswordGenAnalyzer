@@ -1,0 +1,2 @@
+# PasswordGenAnalyzer
+Analyze generated passwords
