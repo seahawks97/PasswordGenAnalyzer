@@ -1,6 +1,6 @@
 # PasswordGenAnalyzer
 ### How to Use
-To generate one password, the only file you have to download is *generator.py*. To generate multiple passwords, download *generator.py* and *multiple_generator.py*. To generate statistics about the passwords, download *generator.py*, *multiple_generator.py*, and *gather_stats.py*.
+To generate one password, the only file you have to download is *generator.py*. To generate multiple passwords, download *generator.py* and *multiple_generator.py*. To generate statistics about the passwords, download *generator.py*, *multiple_generator.py*, and *gather_stats.py*. Run the last file mentioned in each sentence.
 ### How it Works
 1. *Generator.py* gets the length of the password to generate, parses which characters to use, randomly selects the desired number of characters to use, and prints the password.
 2. *Multiple_generator.py* does everything that *generator.py* does, but repeats the printing process to print out multiple passwords in succession.
@@ -11,5 +11,5 @@ To generate one password, the only file you have to download is *generator.py*. 
 3. Percent: See the percentage of times a character has appeared.
 4. List All: Neatly print all characters & their values ("x" has been used n times).
 5. General Stats: Finds the median, mean/average, and standard deviation of character frequency.
-6: Minimum: Finds the character(s) generated the least amount of times.
+6. Minimum: Finds the character(s) generated the least amount of times.
 7. Maximum: Finds the character(s) generated the most amount of times.
