@@ -1,6 +1,6 @@
 # PasswordGenAnalyzer
 ### How to Use
-The only file you have to download is *generator.py*. To generate multiple passwords, download *generator.py* and *multiple_generator.py*. To generate statistics about the passwords, downlaod *generator.py*, *multiple_generator.py*, and *gather_stats.py*.
+To generate one password, the only file you have to download is *generator.py*. To generate multiple passwords, download *generator.py* and *multiple_generator.py*. To generate statistics about the passwords, download *generator.py*, *multiple_generator.py*, and *gather_stats.py*.
 ### How it Works
 1. *Generator.py* gets the length of the password to generate, parses which characters to use, randomly selects the desired number of characters to use, and prints the password.
 2. *Multiple_generator.py* does everything that *generator.py* does, but repeats the printing process to print out multiple passwords in succession.
