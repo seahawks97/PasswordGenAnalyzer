@@ -13,21 +13,25 @@ def main():
     5. Return a list of the values ->
     GENERAL STATS: AVERAGE, MEDIAN, STANDARD DEVIATION of values
     6. Find avg, median, st dev of values
+    7. Min/Max
     """
-    print('Welcome to the Password Stats Collector!\n')
+    print('Welcome to the Password Stats Collector!')
     while True:
         selection = input("What would you like to do: Generate (P)asswords, get (H)elp, or (Q)uit? ").lower()
+        print('')
+
         if selection == 'q':
             input("Press enter to quit. ")
             exit(1)
+
         elif selection == 'h':
-            print('')
             print_help()
+
         elif selection == "p":
             list_of_pws = gen_pws(pw_list)
             times_chars_used = populate_dict(list_of_pws)
             stats_prompt(times_chars_used)
-            print('finale')
+
         else:
             print("Please type a valid command.")
 
@@ -43,6 +47,7 @@ def print_help():
 def stats_prompt(dict_chars):
     while True:
         yesno = input('Would you like to see statistics about your passwords? (Y)es, (N)o, or (I)nformation: ').lower()
+        print('')
         if yesno == 'n':
             input('Press enter to quit. ')
             exit(1)
@@ -56,34 +61,51 @@ def stats_prompt(dict_chars):
 
 
 def get_info():
-    print("\nHere is the info for each stat:")
+    print("Here is the info for each stat:")
     print('1. Number: Gives the number of times a chosen character has appeared across all generated passwords.\n'
           '2. Characters: See all characters with a chosen number of appearances.\n'
           '3. Percent: See the percentage of times a character has appeared.\n'
           '4. List All: Neatly print all characters & their values ("x" has been used n times).\n'
-          '5. General Stats: Finds the median, mean/average, and standard deviation of character frequency.\n')
+          '5. General Stats: Finds the median, mean/average, and standard deviation of character frequency.\n'
+          '6. Minimum: Tells you the character(s) that had the lowest number of generations.\n'
+          '7. Maximum: Tells you the character(s) that has the highest number of generations.\n')
 
 
 def stats_menu(dict_of_chars):
-    print("Select a stat to display:")
+    print("Type the number of a stat you want to display:")
     while True:
         selection = input('1. Number\n'
                           '2. Characters\n'
                           '3. Percent\n'
                           '4. List All\n'
-                          '5. General Stats\n')
+                          '5. General Stats\n'
+                          '6. Minimum\n'
+                          '7. Maximum\n')
         if selection == '1':
             number1(dict_of_chars)
+
         elif selection == '2':
             number2(dict_of_chars)
+
         elif selection == '3':
-            print('Not yet implemented')
+            number3(dict_of_chars)
+
         elif selection == '4':
             print('Not yet implemented')
+
         elif selection == '5':
             print('Not yet implemented')
+
+        elif selection == '6':
+            print('Not yet implemented')
+
+        elif selection == '7':
+            print('Not yet implemented')
+
         else:
             print("Please type a valid number. ")
+
+        print('')
 
 
 def gen_pws(my_list):
@@ -147,7 +169,8 @@ def number1(dict):
 
 
 def char_freq_finder(diction, charac):
-    """ Return the (value) number of times a character (key) has been chosen. """
+    """ Return the (value) number of times a character (key) has been chosen.
+     Seperate function so it can be reused. """
     return diction[charac]
 
 
@@ -178,7 +201,6 @@ def num2_finder(dict, num_occr):
     num_chars = len(list_of_chars)
 
     if num_occr == 1:
-        # print('Characters that have been generated 1 time:')
         word_end = 'time'
     else:
         word_end = 'times'
@@ -196,6 +218,31 @@ def num2_finder(dict, num_occr):
 
     print('')
 
+
+def number3(dict):
+    """ Returns the percentage of times a chosen character has been generated. """
+    # Gets total number of characters generated
+    denom = 0
+    for i in dict.values():
+        denom += i
+
+    while True:
+        char_in = input("Please type a character (-1 to quit): ")
+        if char_in == '-1':
+            input('Press Enter to quit. ')
+            exit(1)
+
+        elif len(char_in) != 1:
+            print("Please type a single character.\n")
+
+        else:
+            if char_in not in dict.keys():
+                numer = 0
+            else:
+                numer = char_freq_finder(dict, char_in)
+
+            print('The character "{}" has been generated {} of {} times, or {}% of the time.'.format(
+                char_in, numer, denom, numer/denom))
 
 
 main()
