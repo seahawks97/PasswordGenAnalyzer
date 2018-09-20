@@ -73,7 +73,7 @@ def get_info():
 
 def stats_menu(dict_of_chars):
     while True:
-        print("Type the number of a stat you want to display:")
+        print("Type the number of a stat you want to display (-1 to quit):")
         selection = input('1. Number\n'
                           '2. Characters\n'
                           '3. Percent\n'
@@ -81,7 +81,11 @@ def stats_menu(dict_of_chars):
                           '5. General Stats\n'
                           '6. Minimum\n'
                           '7. Maximum\n')
-        if selection == '1':
+        if selection == '-1':
+            input('Press Enter to quit. ')
+            exit(1)
+
+        elif selection == '1':
             number1(dict_of_chars)
 
         elif selection == '2':
@@ -147,10 +151,13 @@ def populate_dict(my_list):
 def number1(dict):
     """ Returns the number of times a single character has appeared in the generated passwords. """
     while True:
-        char_in = input("Please type a character (-1 to quit): ")
+        char_in = input("Please type a character (-1 to quit, -2 to return to Stats Menu): ")
         if char_in == '-1':
             input('Press Enter to quit. ')
             exit(1)
+
+        elif char_in == '-2':
+            break
 
         elif len(char_in) != 1:
             print("Please type a single character.\n")
@@ -177,16 +184,22 @@ def char_freq_finder(diction, charac):
 def number2(dict):
     """ Returns all chars with selected number of occurrences. """
     while True:
-        num_in = input('Please type a number (-1 to quit): ')
+        num_in = input('Please type a number (-1 to quit, -2 to return to Stats Menu): ')
         try:
             num_in = int(num_in)
             if num_in == -1:
                 input('Press Enter to quit. ')
                 exit(1)
+
+            elif num_in == -2:
+                break
+
             elif num_in <= 0:
                 print('Please type a positive number.')
+
             else:
                 num2_finder(dict, num_in)
+
         except ValueError:
             print('Please type a number.')
 
@@ -219,18 +232,27 @@ def num2_finder(dict, num_occr):
     print('')
 
 
-def number3(dict):
-    """ Returns the percentage of times a chosen character has been generated. """
+def find_num_chars(dict):
     # Gets total number of characters generated
     denom = 0
     for i in dict.values():
         denom += i
+    return denom
+
+
+def number3(dict):
+    """ Returns the percentage of times a chosen character has been generated. """
+    # Gets total number of characters generated
+    denom = find_num_chars(dict)
 
     while True:
-        char_in = input("Please type a character (-1 to quit): ")
+        char_in = input("Please type a character (-1 to quit, -2 to return to Stats Menu): ")
         if char_in == '-1':
             input('Press Enter to quit. ')
             exit(1)
+
+        elif char_in == '-2':
+            break
 
         elif len(char_in) != 1:
             print("Please type a single character.\n")
@@ -241,7 +263,7 @@ def number3(dict):
             else:
                 numer = char_freq_finder(dict, char_in)
 
-            print('The character "{}" has been generated {} of {} times, or {}% of the time.'.format(
+            print('The character "{}" has been generated {} of {} times, or {}% of the time.\n'.format(
                 char_in, numer, denom, numer/denom))
 
 
@@ -252,6 +274,9 @@ def number4(dict):
 
     for i in range(len(keys)):
         print('The character "{}" has been generated {} times.'.format( keys[i], vals[i] ))
+
+    num_chars = find_num_chars(dict)
+    print('\nThere have been a total of {} characters generated.'.format(num_chars))
 
 
 main()
