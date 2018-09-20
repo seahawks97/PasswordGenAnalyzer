@@ -72,8 +72,8 @@ def get_info():
 
 
 def stats_menu(dict_of_chars):
-    print("Type the number of a stat you want to display:")
     while True:
+        print("Type the number of a stat you want to display:")
         selection = input('1. Number\n'
                           '2. Characters\n'
                           '3. Percent\n'
@@ -91,7 +91,7 @@ def stats_menu(dict_of_chars):
             number3(dict_of_chars)
 
         elif selection == '4':
-            print('Not yet implemented')
+            number4(dict_of_chars)
 
         elif selection == '5':
             print('Not yet implemented')
@@ -243,6 +243,15 @@ def number3(dict):
 
             print('The character "{}" has been generated {} of {} times, or {}% of the time.'.format(
                 char_in, numer, denom, numer/denom))
+
+
+def number4(dict):
+    """ Print all the characters with the number of times they've been generated. """
+    keys = list(dict.keys())
+    vals = list(dict.values())
+
+    for i in range(len(keys)):
+        print('The character "{}" has been generated {} times.'.format( keys[i], vals[i] ))
 
 
 main()
