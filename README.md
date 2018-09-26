@@ -1,5 +1,6 @@
 # PasswordGenAnalyzer
 ### How to Use
+The primary program to be used is *gather_stats.py*. Because of this, the *main* functions have been commented out in the remaining files. If you choose to use *generator.py* or *multiple_generator.py* on their own, open the file in a text editor and remove the *#* in front of *main()* in the last line.
 To generate one password, the only file you have to download is *generator.py*. To generate multiple passwords, download *generator.py* and *multiple_generator.py*. To generate statistics about the passwords, download *generator.py*, *multiple_generator.py*, and *gather_stats.py*. Run the last file mentioned in each sentence.
 ### How it Works
 1. *Generator.py* gets the length of the password to generate, parses which characters to use, randomly selects the desired number of characters to use, and prints the password.
