@@ -12,4 +12,4 @@ To generate one password, the only file you have to download is *generator.py*. 
 3. Percent: See the percentage of times a character has appeared.
 4. List All: Neatly print all characters & their values ("x" has been used n times).
 5. General Stats: Finds the total number of characters generated, number of unique characters generated, expected and actual averages, variance, standard deviation, highest and lowest frequency of characters generated, and which characters have been generated the maximum and minimum number of times.
-6. Graph: Creates a bar graph of number of characters that have been generated. How to read the graph: The bars at a decimal number are read as the lower number. For example, if a bar from 2-3 has a height of 4, that means 4 characters have been generated 2 times.
+6. Graph: MUST have [matplotlib](https://matplotlib.org/) library installed to use the Graph function. Creates a bar graph of number of characters that have been generated. How to read the graph: The bars at a decimal number are read as the lower number. For example, if a bar from 2-3 has a height of 4, that means 4 characters have been generated 2 times.
