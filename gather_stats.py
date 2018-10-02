@@ -36,22 +36,19 @@ def print_help():
 
 def stats_menu(dict_of_chars):
     """
-    I want to be able to:
-    1. NUMBER: Be given the number of times an input char appears in all passwords (n)
-    2. CHARACTERS: See all chars with input num
-    3. PERCENT: See the percentage of given char (##.## %)
-    4. PRINT: Neatly print all characters & their values ("x" has been used n times)
-    5. Return a list of the values ->
-    GENERAL STATS: AVERAGE, MEDIAN, STANDARD DEVIATION of values
-    6. Find avg, median, st dev of values
-    7. Min/Max
+    This is the Stats Menu. Each number performs a specific function. Each number with an "i" typed after it will
+    display useful information about the function (given the function exists).
     """
     stat_info = {'1': '1. Number: Gives the number of times a chosen character has appeared across all generated '
                       'passwords.',
                  '2': '2. Characters: See all characters with a chosen number of appearances.',
                  '3': '3. Percent: See the percentage of times a character has appeared.',
                  '4': '4. List All: Neatly print all characters & their values ("x" has been used n times).',
-                 '5': '5. General Stats: Finds various statistics about frequency of character generation.'}
+                 '5': '5. General Stats: Finds various statistics about frequency of character generation.',
+                 '6': '6. Graph: Create a bar graph of frequency distribution.\n'
+                      'How to read the graph: The bars at a decimal number are read as the lower number. '
+                      'For example, if a bar from 2-3 has a height of 4, that means 4 characters have been '
+                      'generated 2 times.'}
 
     while True:
         print('Type the number of a stat you want to display. Type "i" after '
@@ -60,7 +57,8 @@ def stats_menu(dict_of_chars):
                           '2. Characters\n'
                           '3. Percent\n'
                           '4. List All\n'
-                          '5. General Stats\n').lower()
+                          '5. General Stats\n'
+                          '6. Graph\n').lower()
 
         if selection == '-1':
             input('Press Enter to quit. ')
@@ -84,6 +82,9 @@ def stats_menu(dict_of_chars):
 
         elif selection == '5':
             number5(dict_of_chars)
+
+        elif selection == '6':
+            number6(dict_of_chars)
 
         elif len(selection) == 2:
             sel_list = list(selection)
@@ -229,7 +230,7 @@ def num2_finder(dict, num_occr):
 
 
 def find_num_chars(dict):
-    """ Gets total number of characters generated """
+    """ Gets total number of characters generated. Returns an integer. """
     counter = 0
     for i in dict.values():
         counter += i
@@ -367,7 +368,7 @@ def variance(dictionary, xbar):
 
 
 def find_small_num(my_list):
-    """ Finds the lowest number of generations."""
+    """ Finds & returns the lowest number of generations."""
     lowest = my_list[0]                       # number: 1st element is automatically the lowest
     for i in range(1, len(my_list)):
         if my_list[i] < lowest:
@@ -377,7 +378,7 @@ def find_small_num(my_list):
 
 
 def find_large_num(my_list):
-    """ Finds the lowest number of generations."""
+    """ Finds & returns the largest number of generations."""
     highest = my_list[0]                       # number: 1st element is automatically the highest
     for i in range(1, len(my_list)):
         if my_list[i] > highest:
@@ -387,7 +388,7 @@ def find_large_num(my_list):
 
 
 def find_chars_w_num(dictionary, sn):
-    """ Returns a list of characters whose frequency matches the specified number"""
+    """ Returns a list of characters whose frequency matches the specified number."""
     char_list = []
     for i in dictionary:
         if dictionary[i] == sn:
@@ -396,8 +397,74 @@ def find_chars_w_num(dictionary, sn):
     return char_list
 
 
+def module_exists():
+    """ Checks to see if matplotlib, the module used for the graph, is installed on the current machine."""
+    try:
+        import matplotlib.pyplot
+        return True
+    except ModuleNotFoundError:
+        print('Module for graph not found. Please exit and install the matplotlib module (https://matplotlib.org/) '
+              'to view the graph.')
+
+
+
+def construct_graph(my_dict):
+    """ Construct a histogram of the list of character generation frequencies. """
+    import matplotlib.pyplot as plt                             # imports matplotlib
+
+    my_list = list(my_dict.values())                            # creates list of values
+
+    # Smallest Freq
+    small = find_small_num(my_list)                             # smallest value
+    min_chars_li = find_chars_w_num(my_dict, small)
+    scl_length = len(min_chars_li)
+    if scl_length > 1:
+        specials_s = 's'
+    else:
+        specials_s = ''
+    print('Smallest Frequency: {} character{} had a frequency of {}'.format(scl_length, specials_s, small))
+
+    # Largest Freq
+    large = find_large_num(my_list)                             # largest value
+    large_chars_li = find_chars_w_num(my_dict, large)
+    lcl_length = len(large_chars_li)
+    if lcl_length > 1:
+        specials_t = 's'
+    else:
+        specials_t = ''
+    print('Largest Frequency: {} character{} had a frequency of {}'.format(lcl_length, specials_t, large))
+
+    # Find number of bins
+    range_n = large - small + 1                                 # range of values (difference b/n smallest and largest)
+    print('Number of bins:', range_n)
+
+    # Finds width of bins
+    bin_width = 1
+
+    # Construct bin intervals, must be a list
+    bin_units = [small]
+    x = 1
+    while x <= range_n:
+        bin_units.append(bin_units[x - 1] + bin_width)
+        x += 1
+
+    # print(bin_units)                                          # Comment out for testing
+
+    his = plt.xlabel('Times a Character was Generated')
+    his = plt.ylabel('Number of Characters')
+    his = plt.title('Frequency of Number of Characters Generated')
+
+    his = plt.hist(x=my_list, bins=[x for x in bin_units])
+
+    plt.show()
+
+
+def number6(my_dict):
+    """ Shows a histogram of character generation frequencies. """
+    it_exists = module_exists()
+    if it_exists is True:
+        construct_graph(my_dict)
+
+
 main()
 
-
-"""To Add:
- -Histogram: Bins are the frequency, with a range of the lowest to the highest frequency."""
