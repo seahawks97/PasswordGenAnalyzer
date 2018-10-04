@@ -286,6 +286,11 @@ def number5(dict):
     tot_num_chars = len(possible_chars)                 # int of length of possible_chars
     num_gen_chars = find_num_chars(dict)                # int of length * num pws actually generated
 
+    # Minimum (Used for minimum and median functions):
+    min_gen = find_small_num(vals_list)
+    # Maximum (Used for maximum and median functions):
+    max_gen = find_large_num(vals_list)
+
     # Total
     print('Total of number of characters generated: {}'.format(num_gen_chars))
     print('Total unique characters generated (of {}): {}\n'.format(tot_num_chars, len(vals_list)))
@@ -297,17 +302,46 @@ def number5(dict):
     mean_out = mean(dict)
     print('Actual average frequency of generation for each character generated: %.4f times' % mean_out)
 
+    # Median
+    new_dict = construct_median(dict, min_gen, max_gen)
+    list_of_frequencies = get_med_list(new_dict)
+    num_chars = len(list_of_frequencies)
+    low_boi = num_chars // 2
+
+    maybe_med = list_of_frequencies[low_boi]
+    fst_med = list_of_frequencies[0]
+
+    if fst_med == list_of_frequencies[-1]:
+        med = fst_med
+    elif num_chars % 2 == 1:
+        med = maybe_med
+    else:
+        med = (maybe_med + (list_of_frequencies[low_boi + 1] / 2)) / 2
+
+    print('Median value: ', med)
+
+    # Skew: compare median and mean
+    if med < mean_out:
+        compare = '<'
+        skew = 'right'
+    elif med > mean_out:
+        compare = '>'
+        skew = 'left'
+    else:       # i.e. med == mean_out
+        compare = '='
+        skew = 'symmetrically'
+
+    print('The distribution is {}-skewed because the median {} the mean.'.format(skew, compare))
+
     # Variance & Standard Deviation
     variance_out = variance(dict, mean_out)
-    print('Variance: %.4f' % variance_out)
+    print('\nVariance: %.4f' % variance_out)
 
     std_dev = variance_out ** 0.5
     print('Standard Deviation: %.4f\n' % std_dev)
 
     # Minimum
-    min_gen = find_small_num(vals_list)
     print('Lowest Frequency: {}'.format(min_gen))
-
     min_chars = find_chars_w_num(dict, min_gen)
     length1 = len(min_chars)
     if length1 > 1:
@@ -324,9 +358,7 @@ def number5(dict):
             print('"' + min_chars[i], end='", ')
 
     # Maximum
-    max_gen = find_large_num(vals_list)
     print('Highest Frequency: {}'.format(max_gen))
-
     max_chars = find_chars_w_num(dict, max_gen)
     length2 = len(max_chars)
     if length2 > 1:
@@ -385,6 +417,27 @@ def find_large_num(my_list):
             highest = my_list[i]
 
     return highest
+
+
+def construct_median(dict, min, max):
+    """ Returns a dictionary, keys = frequency, values = number of characters with frequency. """
+    new_dict = {}
+    for i in range(min, max + 1):
+        new_dict[i] = len(find_chars_w_num(dict, i))
+
+    # print(new_dict)                                        # Comment out for testing
+    return new_dict
+
+
+def get_med_list(dict):
+    """ Returns an ordered list of the frequencies from construct_median dictionary. """
+    new_list = []
+    for i in dict.keys():
+        for n in range(dict[i]):
+            new_list.append(i)
+
+    # print(new_list)                                        # Comment out for testing
+    return new_list
 
 
 def find_chars_w_num(dictionary, sn):
