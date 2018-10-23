@@ -1,4 +1,6 @@
 # PasswordGenAnalyzer
+### What It Do
+PasswordGenAnalyzer generates a random password using characters specified in *generator.py*. This excludes characters that closely resemble each other, such as O and 0, to avoid confusion. *gather_stats.py* creates a nice, orderly menu to generate the passwords, and view statistics about the frequency of character generation. This is a medium project (for me) I've been working on to practice my Python skills.
 ### How to Use
 The primary program to be used is *gather_stats.py*. Because of this, the *main* functions have been commented out in the remaining files. If you choose to use *generator.py* or *multiple_generator.py* on their own, open the file in a text editor and remove the *#* in front of *main()* in the last line.
 To generate one password, the only file you have to download is *generator.py*. To generate multiple passwords, download *generator.py* and *multiple_generator.py*. To generate statistics about the passwords, download *generator.py*, *multiple_generator.py*, and *gather_stats.py*. Run the last file mentioned in each sentence.
